@@ -64,8 +64,19 @@ describe('Endpoints', () => {
           
             // compare the two objects
             expect(values[0]).toEqual(values[1]);
-          });
-          
-          
+          }); 
     })
+
+    describe('DELETE /dogs/:id', () => {
+        it('should return null when retrieving the deleted dog entry', async () => {
+            // make a request
+            const response = await request(app).delete(`/dogs/${1}`);
+            // assert a response code
+            expect(response.status).toBe(200);
+            // find entry with id of 1 from db
+            const entry = await Dog.findByPk(1)
+            // expect entry to equal null
+            expect(entry).toBeNull();
+        });
+    });
 });
